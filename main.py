@@ -1,30 +1,45 @@
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
 import time
+import re
+import json
 
 # Initialize ChromeDriver
 service = Service(executable_path='/usr/bin/chromedriver')
 options = webdriver.ChromeOptions()
+options.add_argument("--headless")
 driver = webdriver.Chrome(service=service, options=options)
 
-# Open Google
-driver.get("https://www.google.com")
+driver.get(f'https://finance.yahoo.com/news/')
 
-# Find the search box using its name attribute value
-search_box = driver.find_element_by_name("q")
+news_boxes = driver.find_elements(By.CLASS_NAME, 'Cf')
+patterns = {
+    "news": re.compile(r'https://finance\.yahoo\.com/news/.+\.html'),
+    "media": re.compile(r'https://finance\.yahoo\.com/m/.+\.html'),
+    "video": re.compile(r'https://finance\.yahoo\.com/video/.+\.html'),
+}
 
-# Type in the search query
-search_box.send_keys("Hello, world!")
+def extract_link_data(box):
+    link_dict = {"link": None, "publisher": None, "type": None}
+    s = box.find_element(By.CSS_SELECTOR, 'a').get_attribute('href')
+    box_text = re.split('\n', box.text)
 
-# Submit the query (like hitting 'Enter' key)
-search_box.send_keys(Keys.RETURN)
+    for string in box_text:
+        if "•" in string:
+            link_data = string.split("•")
+            link_dict["publisher"] = link_data[0]
+    return s, link_dict
 
-# Wait for search results to load
-time.sleep(2)
+news_links = []
 
-# Print the title of the current page
-print("Title of the page is: ", driver.title)
-
-# Close the browser
-driver.quit()
+for box in news_boxes:
+    link, link_dict = extract_link_data(box)
+    for category, pattern in patterns.items():
+        if pattern.match(link):
+            link_dict["link"] = link
+            link_dict["type"] = category
+            news_links.append(link_dict)
+            break
+        
+print(news_links)

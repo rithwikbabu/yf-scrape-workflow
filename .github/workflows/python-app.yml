@@ -20,10 +20,9 @@ jobs:
 
     - name: Install Chrome
       run: |
-        wget https://mirror.cs.uchicago.edu/google-chrome/pool/main/g/google-chrome-stable/google-chrome-stable_114.0.5735.90-1_amd64.deb
-        sudo apt-get install -y --allow-downgrades ./google-chrome-stable_114.0.5735.90-1_amd64.deb
+        sudo apt-get update
+        sudo apt-get install -y google-chrome-stable
 
-        
     - name: Install ChromeDriver
       run: |
         CHROME_VERSION=$(google-chrome-stable --version | awk '{ print $3 }' | awk -F'.' '{ print $1 }')
@@ -38,3 +37,11 @@ jobs:
 
     - name: Run Python script
       run: python main.py
+
+    - name: Commit and push
+      run: |
+        git config --local user.email "rithwikbabu2020@gmail.com"
+        git config --local user.name "rithwikbabu"
+        git add .  # Replace with your filename
+        git commit -m "Update links.txt"  # Replace with your commit message
+        git push

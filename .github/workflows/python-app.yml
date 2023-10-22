@@ -37,3 +37,11 @@ jobs:
 
     - name: Run Python script
       run: python main.py
+
+    - name: Commit and push
+      run: |
+        git config --local user.email "rithwikbabu2020@gmail.com"
+        git config --local user.name "rithwikbabu"
+        git add .  # Replace with your filename
+        git commit -m "Update links.txt"  # Replace with your commit message
+        git push

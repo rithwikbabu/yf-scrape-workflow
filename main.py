@@ -1,9 +1,12 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.service import Service
 import time
 
 # Initialize ChromeDriver
-driver = webdriver.Chrome(executable_path='/usr/bin/chromedriver')
+service = Service(executable_path='/usr/bin/chromedriver')
+options = webdriver.ChromeOptions()
+driver = webdriver.Chrome(service=service, options=options)
 
 # Open Google
 driver.get("https://www.google.com")

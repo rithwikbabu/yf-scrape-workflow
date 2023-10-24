@@ -56,7 +56,7 @@ for d in news_links:
             
 news_links = list(unique_links.values())
 
-with open(datetime.now() + "_date.json", "w") as json_file:
+with open(str(datetime.now()) + "_date.json", "w") as json_file:
     json.dump(news_links, json_file, default=str)
 
 driver.quit()

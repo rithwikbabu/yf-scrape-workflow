@@ -38,10 +38,10 @@ jobs:
     - name: Run Python script
       run: python main.py
 
-    - name: Commit and push
+    - name: Commit changes to links.txt
       run: |
-        git config --local user.email "rithwikbabu2020@gmail.com"
-        git config --local user.name "rithwikbabu"
-        git add .  # Replace with your filename
-        git commit -m "Update links.txt"  # Replace with your commit message
-        git push
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<>"
+        git add links.txt  # Replace with the actual file path
+        git commit -m "Update links.txt"
+        git push origin master  # Assuming you want to push to the master branch

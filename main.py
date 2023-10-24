@@ -10,6 +10,17 @@ options = webdriver.ChromeOptions()
 options.add_argument("--headless")
 driver = webdriver.Chrome(service=service, options=options)
 
+# Sleep and scroll settings
+SCROLL_COUNT = 30
+time.sleep(2)
+height = driver.execute_script("return document.body.scrollHeight")
+
+# Scroll 30 times
+for _ in range(SCROLL_COUNT):
+    driver.execute_script(f"window.scrollTo(0, {height});")
+    time.sleep(2)  # You might need to adjust this sleep time
+    height += driver.execute_script("return document.body.scrollHeight")
+
 driver.get(f'https://finance.yahoo.com/news/')
 
 news_boxes = driver.find_elements(By.CLASS_NAME, 'Cf')

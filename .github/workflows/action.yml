@@ -45,4 +45,4 @@ jobs:
         git add links.txt  # Replace with the actual file path
         TODAY_DATE=$(date +'%Y-%m-%d')
         git commit -m "Update links.txt - $TODAY_DATE"
-        git push origin master  # Assuming you want to push to the master branch
+        git push origin main  # Assuming you want to push to the master branch

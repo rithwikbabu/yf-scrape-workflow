@@ -27,8 +27,8 @@ time.sleep(2)
 
 # Scroll 30 times
 for _ in range(SCROLL_COUNT):
-    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    time.sleep(2)
+    driver.execute_script("window.scrollTo(0, 9999999);")  # Scroll to the very bottom
+    time.sleep(5)  # Give it ample time to load new content
 
 # Scrape after scrolling
 news_boxes = driver.find_elements(By.CLASS_NAME, 'Cf')

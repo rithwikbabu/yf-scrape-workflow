@@ -12,14 +12,15 @@ driver = webdriver.Chrome(service=service, options=options)
 
 # Sleep and scroll settings
 SCROLL_COUNT = 30
-time.sleep(2)
+time.sleep(5)
 height = driver.execute_script("return document.body.scrollHeight")
 
 # Scroll 30 times
 for _ in range(SCROLL_COUNT):
     driver.execute_script(f"window.scrollTo(0, {height});")
-    time.sleep(2)  # You might need to adjust this sleep time
+    time.sleep(5)  # You might need to adjust this sleep time
     height += driver.execute_script("return document.body.scrollHeight")
+    print(height)
 
 driver.get(f'https://finance.yahoo.com/news/')
 

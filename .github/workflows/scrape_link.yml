@@ -1,4 +1,4 @@
-name: Run Python Script Every 6 Hours
+name: Scrape YF Links
 
 on:
   schedule:

@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 import json
 import time
+import json
 
 #====================================
 #  To update the scraped_text.json file, all that needs to be done is run update(). This will run through all of links.txt, and scrape any articles that it has not already
@@ -46,11 +47,11 @@ def scrape_content(link, driver, save_path):
 		button[0].click()
 		clicked.append(button[0])
 
-		time.sleep(2)
+		# time.sleep(2)
 		cont_buttons = driver.find_elements(By.XPATH, "//*[contains(text(), 'Story continues')]")
 	print('Opened Full Article')
 
-	time.sleep(1)
+	# time.sleep(1)
 
 	#Getting main content
 	contents = driver.find_elements(By.CLASS_NAME, 'caas-content-wrapper')
@@ -113,15 +114,20 @@ def scrape_content(link, driver, save_path):
 
 	print('Saved Data')
 
-def update(driver, save_path, link_path):
+def update(driver, save_path, link_path, n=25):
 	#Getting the full list of links and scraped links so we only scrape the new ones
 	links = load_existing_links(link_path)
 	scraped_links = load_existing_articles(save_path)
 	for link in links:
+		if n==0:
+			break
+
 		if not link in scraped_links: 
 			print('Begining to scrape {}'.format(link))
 			scrape_content(link, driver, save_path)
 			scraped_links.add(link)			
+
+			n -= 1
 
 #Setting up the web scraper driver itself to pass into the internal scraper
 service = Service(executable_path='/usr/bin/chromedriver')
@@ -132,5 +138,16 @@ options.add_argument("--log-level=3")
 options.add_argument("--headless")
 driver = webdriver.Chrome(options=options, service=service)
 
+with open("scraped_text.json", 'r') as file:
+	backup = json.load(file)
 
 update(driver, 'scraped_text.json', 'links.txt')
+
+try:
+	with open("scraped_text.json", 'r') as file:
+		scraped_text = json.load(file)
+except:
+	print('Save error in srapaced_text.json, reverting to backup')
+	
+	with open("scraped_text.json", 'w') as file:
+		json.dump(backup, file, indent=4)

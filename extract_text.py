@@ -124,7 +124,7 @@ def update(driver, save_path, link_path):
 			scraped_links.add(link)			
 
 #Setting up the web scraper driver itself to pass into the internal scraper
-service = Service()#Service(executable_path='/usr/bin/chromedriver')
+service = Service(executable_path='/usr/bin/chromedriver')
 options = webdriver.ChromeOptions()
 options.add_argument(
 	"user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36")

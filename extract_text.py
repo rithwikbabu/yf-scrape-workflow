@@ -7,6 +7,8 @@ import time
 #====================================
 #  To update the scraped_text.json file, all that needs to be done is run update(). This will run through all of links.txt, and scrape any articles that it has not already
 #====================================
+#	Note that since this script doesn't remove the links, any dead links will be re-scraped every time, this will slowly cause the script to take longer and longer, might be beneficial to delete/clear the links.txt file after scraping
+#====================================
 
 # Function to load existing links
 def load_existing_links(filename):
@@ -51,7 +53,12 @@ def scrape_content(link, driver, save_path):
 	time.sleep(1)
 
 	#Getting main content
-	content = driver.find_element(By.CLASS_NAME, 'caas-content-wrapper')
+	contents = driver.find_elements(By.CLASS_NAME, 'caas-content-wrapper')
+	if len(contents) > 0:
+		content = contents[0]
+	else:
+		print('Article not found, Skipping')
+		return
 	
 	article_data = {}
 
@@ -86,15 +93,23 @@ def scrape_content(link, driver, save_path):
 	print('Got Data')
 
 	# Read existing data from the file
-	with open(save_path, 'r') as file:
-		data = json.load(file)
+	try:
+		with open(save_path, 'r') as file:
+			data = json.load(file)
+	except:
+		print('Not able to open links file to read')
+		return
 
 	# Append the new dictionary to the existing data
 	data.append(article_data)
 
 	# Write the updated data back to the file
-	with open(save_path, 'w') as file:
-		json.dump(data, file, indent=4)
+	try:
+		with open(save_path, 'w') as file:
+			json.dump(data, file, indent=4)
+	except:
+		print('Not able to open file to save')
+		return
 
 	print('Saved Data')
 
@@ -119,4 +134,3 @@ driver = webdriver.Chrome(options=options, service=service)
 
 
 update(driver, 'scraped_text.json', 'links.txt')
-#scrape_content('https://finance.yahoo.com/news/us-aims-speed-heat-pump-160000643.html', driver, 'scraped_text.json')

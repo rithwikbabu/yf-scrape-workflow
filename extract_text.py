@@ -78,7 +78,7 @@ def scrape_content(link, driver, save_path):
 	text = ''
 	paragraphs = content.find_element(By.CLASS_NAME, 'caas-body').find_elements(By.XPATH, './/p')
 	for paragraph in paragraphs:
-		text = f"{text}\n\n{paragraph.text}"
+		text = f"{text}\n{paragraph.text}"
 	article_data['text'] = text
 
 	#Getting related stocks
@@ -114,7 +114,7 @@ def scrape_content(link, driver, save_path):
 
 	print('Saved Data')
 
-def update(driver, save_path, link_path, n=5):
+def update(driver, save_path, link_path, n=15000):
 	#Getting the full list of links and scraped links so we only scrape the new ones
 	links = load_existing_links(link_path)
 	scraped_links = load_existing_articles(save_path)

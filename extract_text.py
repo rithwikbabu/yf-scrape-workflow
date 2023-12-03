@@ -114,7 +114,7 @@ def scrape_content(link, driver, save_path):
 
 	print('Saved Data')
 
-def update(driver, save_path, link_path, n=25):
+def update(driver, save_path, link_path, n=500):
 	#Getting the full list of links and scraped links so we only scrape the new ones
 	links = load_existing_links(link_path)
 	scraped_links = load_existing_articles(save_path)

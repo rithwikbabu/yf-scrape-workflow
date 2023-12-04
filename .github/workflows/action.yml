@@ -41,7 +41,7 @@ jobs:
     - name: Calculate and Update README
       run: |
         PLACEHOLDER=$(python calculate.py)
-        sed -i "s/!>.*<!/!>${PLACEHOLDER}<!/" README.md
+        sed -i "s/!>`.*`<!/!>`${PLACEHOLDER}`<!/" README.md
 
     - name: Commit changes to links.txt
       run: |

@@ -38,11 +38,17 @@ jobs:
     - name: Run Python script
       run: python extract_text.py
 
+    - name: Calculate and Update README
+      run: |
+        UNSCRAPED_LINKS=$(python calculate.py)
+        sed -i "s/PLACEHOLDER/${UNSCRAPED_LINKS}/g" README.md
+
     - name: Commit changes to scraped_text.json
       run: |
         git config user.name "GitHub Actions Bot"
         git config user.email "<>"
-        git add scraped_text.json  # Replace with the actual file path
+        git add scraped_text.json
+        git add README.md # update unscraped link count
         TODAY_DATE=$(date +'%Y-%m-%d')
         git commit -m "Update scraped_text.json - $TODAY_DATE"
         git push origin main  # Assuming you want to push to the master branch

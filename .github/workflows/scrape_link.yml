@@ -40,7 +40,7 @@ jobs:
 
     - name: Calculate and Update README
       run: |
-        UNSCRAPED_LINKS=$(python calculate.py)
+        UNSCRAPED_LINKS=$(python calculate.py "unscraped")
         sed -i "s/PLACEHOLDER/${UNSCRAPED_LINKS}/g" README.md
 
     - name: Commit changes to scraped_text.json

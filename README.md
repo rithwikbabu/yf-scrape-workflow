@@ -1,5 +1,5 @@
 # yf-scrape-workflow
 ## Statistics
 
-- Total number of links: `SCRAPED_LINKS`
-- Number of unscraped links: `UNSCRAPED_LINKS`
+- Total number of links: `12271`
+- Number of unscraped links: `UN12271`

@@ -40,8 +40,8 @@ jobs:
 
     - name: Calculate and Update README
       run: |
-        CALCULATED_NUMBER=$(python calculate.py)
-        sed -i "s/PLACEHOLDER/${CALCULATED_NUMBER}/g" README.md
+        SCRAPED_LINKS=$(python calculate.py)
+        sed -i "s/PLACEHOLDER/${SCRAPED_LINKS}/g" README.md
 
     - name: Commit changes to links.txt
       run: |

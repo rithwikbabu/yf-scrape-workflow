@@ -2,7 +2,7 @@ name: Scrape YF Links
 
 on:
   schedule:
-    - cron: '0 */6 * * *'  # Runs every 6 hours
+    - cron: '30 */6 * * *'  # Runs every 6 hours offset by 30 minutes (at 00:30, 06:30, 12:30, 18:30, etc.)
   workflow_dispatch:
 
 jobs:
